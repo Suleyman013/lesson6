@@ -1,8 +1,12 @@
 import java.util.*;
-
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;    
+import java.io.File;
 public class Main {
     public static void main(String[] args) {
         try {
+            ObjectMapper mapper = new ObjectMapper();
+            mapper.enable(SerializationFeature.INDENT_OUTPUT);
             List<student> students = new ArrayList<>();
             List<teacher> teachers = new ArrayList<>();
             List<Course> courses = new ArrayList<>();
@@ -40,7 +44,14 @@ public class Main {
             System.out.println("\n=== Exam Results ===");
             for (exam e : exams) {
                 System.out.println(e);
+                
             }
+            mapper.writeValue(new File("students.json"), students);
+            mapper.writeValue(new File("teachers.json"), teachers);
+            mapper.writeValue(new File("courses.json"), courses);
+            mapper.writeValue(new File("exams.json"), exams);
+
+            System.out.println("Files written successfully!");
         } catch (Exception e) {
             e.printStackTrace();
         }
